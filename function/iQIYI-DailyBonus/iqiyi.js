@@ -26,6 +26,15 @@ async function changeFiele () {
     await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
 }
 
+async function appendFiele (path) {
+    let content = "";
+    if (fs.existsSync(path)) {
+        content = fs.readFileSync(path, "utf8");
+    }
+    let contentAppend = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
+    await fs.writeFileSync( path, content + contentAppend, 'utf8')
+}
+
 async function deleteFile(path) {
     // 查看文件result.txt是  否存在,如果存在,先删除
     const fileExists = await fs.existsSync(path);
@@ -47,10 +56,12 @@ async function start() {
     // 替换变量
     await changeFiele();
     console.log('替换变量完毕')
-    // 执行
-    await exec("node iQIYI-bak.js >> result.txt");
-    console.log('执行完毕')
+
     const path = "./result.txt";
+    // 执行
+    await appendFiele (path)
+    console.log('执行完毕')
+    
     let content = "";
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");

@@ -33,7 +33,7 @@ async function deleteFile(path) {
     const fileExists = await fs.existsSync(path);
     // console.log('fileExists', fileExists);
     if (fileExists) {
-        let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
+        let content = await fs.readFileSync(path, 'utf8')
         console.log("处理结果：" + content)
         const unlinkRes = await fs.unlinkSync(path);
         // console.log('unlinkRes', unlinkRes)

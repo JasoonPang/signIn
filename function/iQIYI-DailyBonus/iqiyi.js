@@ -12,7 +12,6 @@ const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
 // IQIYI_COOKIE	爱奇艺Cookie	F12控制台执行console.log(document.cookie)电脑版有效期三个月
 const KEY = process.env.IQIYI_COOKIE
-//const KEY = 'QC008=1722984715.1722984715.1722984715.1; QC234=4ac5c80408c70f17bbcba25edf591ab9; QC235=8786113fc67346ac91862e0bea3a2747; QC005=60bc1190422596ab0265f3ea3562ad3a; QC007=https%3A%2F%2Fntp.msn.cn%2F; QC142=ac30238882b84c8c; __dfp=a04be951686be8408ea8b824e9fe8acb88dbb6ef19260db623223ddb74861f9098@1724280716093@1722984717093; QP0037=0; QP0034=%7B%22v%22%3A16%2C%22dp%22%3A1%2C%22dm%22%3A%7B%22wv%22%3A1%7D%2C%22m%22%3A%7B%22wm-vp9%22%3A1%2C%22wm-av1%22%3A1%7D%2C%22hvc%22%3Afalse%2C%22l%22%3A1%7D; QC006=46a9b565e64b1f777461e4ea4a2e508a; QP0030=1; P00004=.1723771119.3ad2f7be15; P00001=5dFiScuqJder4fm253cgm3vE8PzrPKb6NdgGorV0WsRXXrl9CY3yKaPFm3JBlccTm2C9lqf4; P00007=5dFiScuqJder4fm253cgm3vE8PzrPKb6NdgGorV0WsRXXrl9CY3yKaPFm3JBlccTm2C9lqf4; P00003=4110972511968832; P00010=4110972511968832; P01010=1723824000; P00PRU=4110972511968832; P00002=%7B%22uid%22%3A%224110972511968832%22%2C%22pru%22%3A4110972511968832%2C%22user_name%22%3A%22175****1622%22%2C%22nickname%22%3A%22%5Cu7528%5Cu6237%40e9ae86041de40%22%2C%22pnickname%22%3A%22%5Cu7528%5Cu6237%40e9ae86041de40%22%2C%22type%22%3A11%2C%22email%22%3Anull%7D; QP0013=1; QP0014=2; QC170=1; T00404=c275ce4020a874627a7b28b9bba42dc4; vipTypes=1; PD005=lalcabc4tjrnr1djth1rqcril94gtbm3; QP0035=5; curDeviceState=width%3D1528%3BconduitId%3D%3Bscale%3D125%3Bbrightness%3Ddark%3BisLowPerformPC%3D0%3Bos%3Dbrowser; IMS=IggQABj_7v21BiouCiQ1ZDYwOTVmMC03ZTQ3LTRiOGItOTA3NS00MmFhZmU2MjNkZDcQACIAKFIwBTAAMAAwAHIoCiQ1ZDYwOTVmMC03ZTQ3LTRiOGItOTA3NS00MmFhZmU2MjNkZDcQAIoBKAomCiQ1ZDYwOTVmMC03ZTQ3LTRiOGItOTA3NS00MmFhZmU2MjNkZDc; QP0036=2024816%7C59.331'
 const P00001 = KEY.match(/P00001=(.*?);/)[1];
 const P00003 = KEY.match(/P00003=(.*?);/)[1];
 const DFP = KEY.match(/__dfp=(\w+)/)[1];
@@ -21,7 +20,8 @@ const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
+    // const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
+    const url = 'https://github.com/BlueSkyClouds/Script/blob/master/nodejs/iQIYI-bak.js'
     await download(url, './')
 }
 

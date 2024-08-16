@@ -8,35 +8,43 @@
 const $ = new Env('腾讯视频会员签到');
 const notify = $.isNode() ? require('../sendNotify') : '';
 let ref_url = ''
-let _cookie = process.env.V_COOKIE
+let _cookie = ''
+let _refUrl = ''
+let auth = ''
+const cookieArray = process.env.V_COOKIE.split('\n')
+const urlArray = process.env.V_REF_URL.split('\n')
+
 const SEND_KEY = process.env.SEND_KEY
-const auth = getAuth()
 const axios = require('axios')
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000;
 let notice = timeFormat(UTC8) + "\n"
 
-let headers = {
-    'Referer': 'https://v.qq.com',
-    'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; BLA-AL00 Build/HUAWEIBLA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.9 Mobile Safari/537.36',
-    'Cookie': _cookie
-}
-/**
- * @description 拼接REF_URL
- */
-if (process.env.V_REF_URL) {
-    if (process.env.V_REF_URL.indexOf('https://access.video.qq.com/user/auth_refresh') > -1) {
-        ref_url = process.env.V_REF_URL
-    } else {
-        console.log("V_REF_URL值填写错误 取消运行")
+for (i=0;i< cookieArray.length;i++){
+    _cookie = cookieArray[i]
+    _refUrl = urlArray[i]
+    auth = getAuth(_cookie)
+    let headers = {
+        'Referer': 'https://v.qq.com',
+        'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; BLA-AL00 Build/HUAWEIBLA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.9 Mobile Safari/537.36',
+        'Cookie': _cookie
     }
-    //验证V_REF_URL和cookie是否填写正确
-    ref_url_ver()
-} else {
-    //无意义输出方便调试
-    console.log("V_REF_URL值未填写 取消运行")
-    //ref_url_ver()
+    /**
+     * @description 拼接REF_URL
+     */
+    if (_refUrl) {
+        if (_refUrl.indexOf('https://access.video.qq.com/user/auth_refresh') > -1) {
+            ref_url = _refUrl
+        } else {
+            console.log("V_REF_URL值填写错误 取消运行")
+        }
+        //验证V_REF_URL和cookie是否填写正确
+        ref_url_ver()
+    } else {
+        //无意义输出方便调试
+        console.log("V_REF_URL值未填写 取消运行")
+        //ref_url_ver()
+    }
 }
-
 /**
  * @description 封装一个解析setCookie的方法
  * @returns obj

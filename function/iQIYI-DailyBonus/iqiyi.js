@@ -56,7 +56,7 @@ async function start() {
 
     const path = "./result.txt";
     // 执行
-    await exec('node ./iQIYI-bak.js')
+    await exec('node ./iQIYI-bak.js >> ./result.txt')
     console.log('执行完毕')
     
     let content = "";

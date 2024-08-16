@@ -38,7 +38,7 @@ for (i=0;i< cookieArray.length;i++){
             console.log("V_REF_URL值填写错误 取消运行")
         }
         //验证V_REF_URL和cookie是否填写正确
-        ref_url_ver()
+        ref_url_ver(ref_url, _cookie)
     } else {
         //无意义输出方便调试
         console.log("V_REF_URL值未填写 取消运行")

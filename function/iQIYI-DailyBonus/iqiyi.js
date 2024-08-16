@@ -12,10 +12,7 @@ const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
 // IQIYI_COOKIE	爱奇艺Cookie	F12控制台执行console.log(document.cookie)电脑版有效期三个月
 const KEY = process.env.IQIYI_COOKIE
-const P00001 = KEY.match(/P00001=(.*?);/)[1];
-const P00003 = KEY.match(/P00003=(.*?);/)[1];
-const DFP = KEY.match(/__dfp=(\w+)/)[1];
-console.log('解析的' + P00001 + '|' + P00003 + '|' + DFP)
+
 const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
@@ -28,7 +25,6 @@ async function downFile () {
 async function changeFiele () {
     let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    console.log("爱奇艺签到-替换后\n" + content)
     await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
 }
 
@@ -37,6 +33,8 @@ async function deleteFile(path) {
     const fileExists = await fs.existsSync(path);
     // console.log('fileExists', fileExists);
     if (fileExists) {
+        let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
+        console.log("处理结果：" + content)
         const unlinkRes = await fs.unlinkSync(path);
         // console.log('unlinkRes', unlinkRes)
     }

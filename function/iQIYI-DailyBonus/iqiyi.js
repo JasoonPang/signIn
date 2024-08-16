@@ -51,7 +51,7 @@ async function start() {
     // 替换变量
     const keyCookies = KEY.split('\n')
     for (const keyCookie of keyCookies) {
-        const P00003 = cookie.match(/P00003=(.*?);/)[1];
+        const P00003 = keyCookie.match(/P00003=(.*?);/)[1];
         await changeFiele(keyCookie);
         console.log(P00003 + '： 替换变量完毕')
     

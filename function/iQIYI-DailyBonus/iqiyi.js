@@ -22,12 +22,12 @@ const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*6
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
     await download(url, './')
-    exec('cat ./iQIYI-bak.js')
 }
 
 async function changeFiele () {
     let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
+    console.log("爱奇艺签到-替换后\n" + content)
     await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
 }
 

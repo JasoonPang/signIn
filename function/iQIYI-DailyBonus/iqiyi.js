@@ -12,7 +12,6 @@ const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
 // IQIYI_COOKIE	爱奇艺Cookie	F12控制台执行console.log(document.cookie)电脑版有效期三个月
 const KEY = process.env.IQIYI_COOKIE
-console.log("爱奇艺签到-" + process.env.IQIYI_COOKIE + '重复签到，取消推送')
 const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 

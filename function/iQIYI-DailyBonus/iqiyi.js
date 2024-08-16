@@ -22,10 +22,10 @@ async function downFile () {
     await download(url, './')
 }
 
-async function changeFiele () {
+async function changeFiele (keyCookie) {
     let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
-    content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
+    content = content.replace(/var cookie = ''/, `var cookie = '${keyCookie}'`)
+    await fs.writeFileSync( './iQIYI-replace.js', content, 'utf8')
 }
 
 async function deleteFile(path) {
@@ -49,39 +49,43 @@ async function start() {
     await downFile();
     console.log('下载代码完毕')
     // 替换变量
-    await changeFiele();
-    console.log('替换变量完毕')
-
-    const path = "./result.txt";
-    // 执行
-    await exec('node ./iQIYI-bak.js >> ./result.txt')
-    console.log('执行完毕')
+    const keyCookies = KEY.split('\n')
+    for (const keyCookie of keyCookies) {
+        const P00003 = cookie.match(/P00003=(.*?);/)[1];
+        await changeFiele(keyCookie);
+        console.log(P00003 + '： 替换变量完毕')
     
-    let content = "";
-    if (fs.existsSync(path)) {
-        content = fs.readFileSync(path, "utf8");
-    }
-    if (content = ""){
-        console.log("爱奇艺签到-没有同步到源文件")
-    }else{
-        if (content.includes("任务次数已经到达上限")) {
-            //重复签到,不推送仅输出，因为每天会签到两次防止抽奖失败.
-            console.log("爱奇艺签到-重复签到，取消推送")
-        }else if(SEND_KEY) {
-            if (content.includes("Cookie")) {
-                await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
-                console.log("爱奇艺签到-包含Cookie")
-            }else{
-                console.log("爱奇艺签到-不包含Cookie")
-            }
-        }else{
-            await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
-            console.log("爱奇艺签到")
+        const path = "./result.txt";
+        // 执行
+        await exec('node ./iQIYI-replace.js >> ./result.txt')
+        console.log('执行完毕')
+        
+        let content = "";
+        if (fs.existsSync(path)) {
+            content = fs.readFileSync(path, "utf8");
         }
-    
-        //运行完成后，删除下载的文件
-        console.log('运行完成后，删除下载的文件\n')
-        await deleteFile(path);
+        if (content = ""){
+            console.log("爱奇艺签到-没有同步到源文件")
+        }else{
+            if (content.includes("任务次数已经到达上限")) {
+                //重复签到,不推送仅输出，因为每天会签到两次防止抽奖失败.
+                console.log("爱奇艺签到-重复签到，取消推送")
+            }else if(SEND_KEY) {
+                if (content.includes("Cookie")) {
+                    await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
+                    console.log("爱奇艺签到-包含Cookie")
+                }else{
+                    console.log("爱奇艺签到-不包含Cookie")
+                }
+            }else{
+                await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
+                console.log("爱奇艺签到")
+            }
+        
+            //运行完成后，删除下载的文件
+            console.log('运行完成后，删除下载的文件\n')
+            await deleteFile(path);
+        }
     }
 }
 

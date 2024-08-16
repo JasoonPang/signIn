@@ -73,24 +73,26 @@ async function start() {
     }
     if (content = ""){
         console.log("爱奇艺签到-没有同步到源文件")
-    }
-    if (content.includes("任务次数已经到达上限")) {
-        //重复签到,不推送仅输出，因为每天会签到两次防止抽奖失败.
-        console.log("爱奇艺签到-重复签到，取消推送")
-    }else if(SEND_KEY) {
-        if (content.includes("Cookie")) {
-            await notify.sendNotify("爱奇艺签到-包含Cookie" + timeFormat(UTC8), content);
-        }else{
-            console.log("爱奇艺签到-不包含Cookie")
-        }
     }else{
-        await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
-        console.log("爱奇艺签到-没有SEND-KEY")
+        if (content.includes("任务次数已经到达上限")) {
+            //重复签到,不推送仅输出，因为每天会签到两次防止抽奖失败.
+            console.log("爱奇艺签到-重复签到，取消推送")
+        }else if(SEND_KEY) {
+            if (content.includes("Cookie")) {
+                await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
+                console.log("爱奇艺签到-包含Cookie")
+            }else{
+                console.log("爱奇艺签到-不包含Cookie")
+            }
+        }else{
+            await notify.sendNotify("爱奇艺签到-" + timeFormat(UTC8), content);
+            console.log("爱奇艺签到")
+        }
+    
+        //运行完成后，删除下载的文件
+        console.log('运行完成后，删除下载的文件\n')
+        await deleteFile(path);
     }
-
-    //运行完成后，删除下载的文件
-    console.log('运行完成后，删除下载的文件\n')
-    await deleteFile(path);
 }
 
 start()

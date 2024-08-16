@@ -20,9 +20,9 @@ const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
 async function downFile () {
-    // const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
-    const url = 'https://github.com/BlueSkyClouds/Script/blob/master/nodejs/iQIYI-bak.js'
+    const url = 'https://raw.githubusercontent.com/BlueSkyClouds/Script/master/nodejs/iQIYI-bak.js'
     await download(url, './')
+    exec('cat ./iQIYI-bak.js')
 }
 
 async function changeFiele () {

@@ -27,6 +27,7 @@ jobs:
                   node function/iQIYI-DailyBonus/iqiyi.js
               env:
                   IQIYI_COOKIE: ${{ secrets.IQIYI_COOKIE }}
+                  IQIYI_DEBUG: true
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}

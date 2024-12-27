@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     schedule:
         # 分 时 天 月 年  UTC + 8
-        - cron: "0 17,13 * * *"
+        - cron: "0 19,13 * * *"
     watch:
         types: [started]
 
